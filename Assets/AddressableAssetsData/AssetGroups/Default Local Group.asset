@@ -1,0 +1,108 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Default Local Group
+  m_EditorClassIdentifier: Unity.Addressables.Editor::UnityEditor.AddressableAssets.Settings.AddressableAssetGroup
+  m_GroupName: Default Local Group
+  m_GUID: 629b9ff54f1d2904f9055b2c766f6206
+  m_SerializeEntries:
+  - m_GUID: 1ddfdeebabdd14349a2326fa0ab7d89a
+    m_Address: Assets/Prefab/Gameplay/RackSlotPrefab.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 205180cb35d9ff94cb40567c64c570fb
+    m_Address: Assets/SO/LevelData/LevelDatas/Level_5.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 220d5e8c56e41fa4b8dfe15757fc617e
+    m_Address: Assets/SO/LevelData/LevelDatas/Level_0.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 38ffbad5163120546983d4fb73407075
+    m_Address: Assets/SO/LevelData/LevelDatas/Level_2.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 516f8e85a70f86c43abdf7d3e2b41c53
+    m_Address: Assets/Prefab/Gameplay/SaveManager.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 59caeefc63407064c86b598b4b410949
+    m_Address: Assets/SO/LevelData/LevelDatas/Level_8.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 59f462dba4be56c4daf296734009bd78
+    m_Address: Assets/Audio/tap.ogg
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 643b9b0e2d0493d47b318123506195a8
+    m_Address: Assets/Prefab/UI/LevelSlot.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6b32b512846e9f14283fad160b09ddad
+    m_Address: Assets/SO/LevelData/LevelDatas/Level_1.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6b3ec2d0ab146d04d954d5901deb1069
+    m_Address: Assets/SO/LevelData/LevelDatas/Level_6.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7a05a91efcc05fb4892e164008d99516
+    m_Address: Assets/SO/LevelData/LevelDatas/Level_7.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 96e9bd99602325e47a8ae137021b9e69
+    m_Address: Assets/SO/LevelData/LevelDatas/Level_9.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9e8c1080550e27a4fb65adfe7665b910
+    m_Address: Assets/Audio/match.ogg
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a0a133639f641c64f81696e5c39c334a
+    m_Address: Assets/SO/LevelData/LevelDatas/Level_4.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e512a9aabb0306c4ca74189761544c6d
+    m_Address: Assets/SO/LevelData/LevelDatas/Level_3.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: eaca4ab18886aff45aa2e9cbdf2382ae
+    m_Address: Assets/Prefab/Gameplay/TilePrefab.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f3db78f489aba5143aa59ec5e8842d4c
+    m_Address: Assets/Audio/bg_music.ogg
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 1ec3ef31c34abd04cb99680f8412e723, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 828663bbdda53bd499492ada607ad9d5, type: 2}
+    - {fileID: 11400000, guid: d19c72185adcf834296b1766935fd83a, type: 2}

@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cf97bc94b7e7ed4aa197d45dcd0f357, type: 3}
+  m_Name: TileIconPaletteSO
+  m_EditorClassIdentifier: Assembly-CSharp::TileIconPaletteSO
+  iconList:
+  - {fileID: -855298285791758126, guid: f24ae853c46edd84ebe3b4174769bae4, type: 3}
+  - {fileID: 6937817954938267909, guid: 1c8061f16467eaa41806921d2f8ec361, type: 3}
+  - {fileID: -6470460504253458178, guid: 63e2db950ff8a354ca0fae7505ce55fe, type: 3}
+  - {fileID: -4178046375966092550, guid: 831b7b421969adb4e8f4d94b0de0ef7b, type: 3}
+  - {fileID: 4130640169021434097, guid: b18428e0ad9a408428fb5b36be0f486a, type: 3}
+  - {fileID: 3465286685962602723, guid: 0cc4c88f19d19e84f93cc9e2767b49c7, type: 3}
+  - {fileID: 7028616704906629411, guid: ab29c726c873ac14e9deb599dc25b71d, type: 3}
+  - {fileID: 8288426215254106694, guid: 7dd66729ec0583444b5c38619622fd29, type: 3}
+  - {fileID: 4113829005332862926, guid: 9c7253f5a0d629743a499190fdbcec87, type: 3}
+  - {fileID: -5099292496197868168, guid: dbeef7959074db7429b2764098769e0d, type: 3}
+  - {fileID: -2966200626249415253, guid: 25d509106b9cb154b894395b27ca03cb, type: 3}
+  - {fileID: -1540426309290004842, guid: 991b116b691b0074bbb37ac8992000e4, type: 3}
+  - {fileID: 8389134475083476877, guid: 9db9776ece70f4e438adf510d56ca869, type: 3}
+  - {fileID: -6270953770400647376, guid: 3f746edfcc0a3ce479452acd863c4f8a, type: 3}

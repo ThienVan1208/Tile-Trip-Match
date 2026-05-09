@@ -1,98 +1,169 @@
 using System.Collections.Generic;
 using UnityEngine;
-using TileTrip.Tiles.Data;
-
-namespace TileTrip.EditorTools
+namespace TileAdventure
 {
-    /// <summary>
-    /// Quản lý lưới 3D, vẽ Gizmos và làm data provider để TileLevelEditorWindow lưu xuống SO.
-    /// (Chạy trong môi trường thiết kế level)
-    /// </summary>
     [ExecuteAlways]
     public class LevelEditorBoard : MonoBehaviour
     {
+        public Sprite ContainerSprite;
         public float CellSize = 1f;
-
-        // Dictionary theo dõi các ô đang đặt trên grid: Key = (X, Y, Layer)
-        private Dictionary<Vector3Int, bool> _placedTiles = new Dictionary<Vector3Int, bool>();
-
+        private Dictionary<Vector3Int, int> _placedTilesData = new Dictionary<Vector3Int, int>();
+        private Dictionary<Vector3Int, GameObject> _previewObjects = new Dictionary<Vector3Int, GameObject>();
         public void ClearBoard()
         {
-            _placedTiles.Clear();
+            _placedTilesData.Clear();
+            foreach (var go in _previewObjects.Values)
+            {
+                if (go != null) DestroyImmediate(go);
+            }
+            _previewObjects.Clear();
         }
-
-        public void LoadLayout(List<TileSpawnData> layout)
+        public void LoadLayout(List<TileSpawnInfor> layout, List<Sprite> iconPalette)
         {
             ClearBoard();
             if (layout == null) return;
             foreach (var tile in layout)
             {
-                _placedTiles[new Vector3Int(tile.GridX, tile.GridY, tile.LayerIndex)] = true;
+                Sprite previewSprite = null;
+                if (iconPalette != null && tile.IconId >= 0 && tile.IconId < iconPalette.Count)
+                    previewSprite = iconPalette[tile.IconId];
+                ToggleTile(tile.GridX, tile.GridY, tile.LayerIndex, tile.IconId, previewSprite, true);
             }
+            UpdateAllTileColors();
         }
-
-        public List<TileSpawnData> GetTilesData()
+        public List<TileSpawnInfor> GetTilesData()
         {
-            List<TileSpawnData> list = new List<TileSpawnData>();
-            foreach (var kvp in _placedTiles)
+            List<TileSpawnInfor> list = new List<TileSpawnInfor>();
+            foreach (var kvp in _placedTilesData)
             {
-                if (kvp.Value)
-                {
-                    list.Add(new TileSpawnData(kvp.Key.x, kvp.Key.y, kvp.Key.z));
-                }
+                list.Add(new TileSpawnInfor(kvp.Key.x, kvp.Key.y, kvp.Key.z, kvp.Value));
             }
             return list;
         }
-
-        public void ToggleTile(int x, int y, int layer)
+        public void ToggleTile(int x, int y, int layer, int iconId, Sprite sprite, bool isForceAdd = false)
         {
             Vector3Int key = new Vector3Int(x, y, layer);
-            if (_placedTiles.ContainsKey(key))
+            if (!isForceAdd && _placedTilesData.ContainsKey(key))
             {
-                _placedTiles.Remove(key); // Xóa nếu đã có
+                _placedTilesData.Remove(key);
+                if (_previewObjects.ContainsKey(key))
+                {
+                    DestroyImmediate(_previewObjects[key]);
+                    _previewObjects.Remove(key);
+                }
             }
             else
             {
-                _placedTiles[key] = true; // Thêm nếu chưa có
-            }
-        }
-
-        public bool HasTile(int x, int y, int layer)
-        {
-            return _placedTiles.ContainsKey(new Vector3Int(x, y, layer));
-        }
-
-        public Vector3 GetWorldPosition(int gridX, int gridY, int layer)
-        {
-            // Lớp lẻ (1, 3, 5) sẽ dịch chuyển 1/2 ô so với lớp chẵn (0, 2, 4)
-            float offset = (layer % 2 != 0) ? CellSize * 0.5f : 0f;
-            float worldX = transform.position.x + (gridX * CellSize) + offset;
-            float worldY = transform.position.y + (gridY * CellSize) + offset;
-            float worldZ = transform.position.z - layer; // Z âm để đè lên trên hiển thị (nếu 2D)
-
-            return new Vector3(worldX, worldY, worldZ);
-        }
-
-        private void OnDrawGizmos()
-        {
-            // Vẽ lưới (wireframe) và các ô (solid/wire) ở chế độ Editor
-            Gizmos.color = Color.white;
-
-            foreach (var kvp in _placedTiles)
-            {
-                if (kvp.Value)
+                _placedTilesData[key] = iconId;
+                if (!_previewObjects.ContainsKey(key))
                 {
-                    Vector3Int pos = kvp.Key;
-                    Vector3 worldPos = GetWorldPosition(pos.x, pos.y, pos.z);
+                    GameObject go = new GameObject($"Tile_Preview_{x}_{y}_{layer}");
+                    go.transform.SetParent(this.transform);
+                    go.hideFlags = HideFlags.HideAndDontSave; 
 
-                    // Gradient màu theo layer index để dễ phân biệt
-                    Gizmos.color = Color.Lerp(Color.yellow, Color.cyan, pos.z / 5f);
-                    Gizmos.DrawCube(worldPos, new Vector3(CellSize * 0.9f, CellSize * 0.9f, 0.1f));
-                    
-                    Gizmos.color = Color.black;
-                    Gizmos.DrawWireCube(worldPos, new Vector3(CellSize, CellSize, 0.1f));
+                    GameObject containerGo = new GameObject("Container");
+                    containerGo.transform.SetParent(go.transform, false);
+                    SpriteRenderer containerSr = containerGo.AddComponent<SpriteRenderer>();
+                    containerSr.sprite = ContainerSprite;
+                    containerSr.sortingOrder = layer * 2;
+
+                    GameObject iconGo = new GameObject("Icon");
+                    iconGo.transform.SetParent(go.transform, false);
+                    SpriteRenderer iconSr = iconGo.AddComponent<SpriteRenderer>();
+                    iconSr.sprite = sprite;
+                    iconSr.sortingOrder = layer * 2 + 1;
+
+                    go.transform.position = GetWorldPosition(x, y, layer);
+                    _previewObjects[key] = go;
+                }
+                else
+                {
+                    Transform iconTrans = _previewObjects[key].transform.Find("Icon");
+                    if (iconTrans != null)
+                    {
+                        iconTrans.GetComponent<SpriteRenderer>().sprite = sprite;
+                    }
                 }
             }
+
+            if (!isForceAdd)
+            {
+                UpdateAllTileColors();
+            }
+        }
+        public Vector3 GetWorldPosition(int gridX, int gridY, int layer)
+        {
+            float offset = (layer % 2 != 0) ? CellSize * 0.5f : 0f;
+            return transform.position + new Vector3(gridX * CellSize + offset, gridY * CellSize + offset, -layer);
+        }
+        private void OnDisable()
+        {
+            foreach (var go in _previewObjects.Values)
+            {
+                if (go != null) DestroyImmediate(go);
+            }
+            _previewObjects.Clear();
+        }
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.white;
+            foreach (var kvp in _placedTilesData)
+            {
+                Vector3 wPos = GetWorldPosition(kvp.Key.x, kvp.Key.y, kvp.Key.z);
+                Gizmos.DrawWireCube(wPos, new Vector3(CellSize, CellSize, 0.1f));
+            }
+        }
+
+        public void UpdateAllTileColors()
+        {
+            foreach (var go in _previewObjects.Values)
+            {
+                var renderers = go.GetComponentsInChildren<SpriteRenderer>();
+                foreach (var r in renderers) r.color = Color.white;
+            }
+
+            HashSet<Vector3Int> coveredTiles = new HashSet<Vector3Int>();
+            foreach (var kvp in _placedTilesData)
+            {
+                Vector3Int pos = kvp.Key;
+                List<Vector3Int> underlying = GetUnderlyingPositions(pos.x, pos.y, pos.z);
+                foreach (var u in underlying)
+                {
+                    coveredTiles.Add(u);
+                }
+            }
+
+            foreach (var coveredPos in coveredTiles)
+            {
+                if (_previewObjects.TryGetValue(coveredPos, out GameObject go))
+                {
+                    var renderers = go.GetComponentsInChildren<SpriteRenderer>();
+                    foreach (var r in renderers) r.color = new Color(0.6f, 0.6f, 0.6f, 1f);
+                }
+            }
+        }
+
+        private List<Vector3Int> GetUnderlyingPositions(int x, int y, int layer)
+        {
+            List<Vector3Int> result = new List<Vector3Int>();
+            if (layer <= 0) return result;
+            int lowerLayer = layer - 1;
+            bool isCurrentOdd = (layer % 2 != 0);
+            if (isCurrentOdd)
+            {
+                result.Add(new Vector3Int(x, y, lowerLayer));
+                result.Add(new Vector3Int(x + 1, y, lowerLayer));
+                result.Add(new Vector3Int(x, y + 1, lowerLayer));
+                result.Add(new Vector3Int(x + 1, y + 1, lowerLayer));
+            }
+            else
+            {
+                result.Add(new Vector3Int(x, y, lowerLayer));
+                result.Add(new Vector3Int(x - 1, y, lowerLayer));
+                result.Add(new Vector3Int(x, y - 1, lowerLayer));
+                result.Add(new Vector3Int(x - 1, y - 1, lowerLayer));
+            }
+            return result;
         }
     }
 }
