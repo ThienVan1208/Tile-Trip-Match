@@ -34,11 +34,10 @@ namespace TileAdventure
 
         public override void ResetEffect(RectTransform target)
         {
-            var canvasGroup = target.GetComponent<CanvasGroup>();
-            if (canvasGroup != null)
+            if (_canvasGroup != null)
             {
-                canvasGroup.DOKill();
-                canvasGroup.alpha = fromAlpha;
+                _canvasGroup.DOKill();
+                _canvasGroup.alpha = fromAlpha;
             }
         }
     }

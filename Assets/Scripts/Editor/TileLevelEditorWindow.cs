@@ -115,9 +115,9 @@ namespace TileAdventure
             {
                 ClearLevelData();
             }
-            if (GUILayout.Button("Auto Color", GUILayout.Height(30)))
+            if (GUILayout.Button("Fill Tile Auto", GUILayout.Height(30)))
             {
-                AutoColorSolvable();
+                FillTileAuto();
             }
             GUILayout.EndHorizontal();
             GUILayout.EndVertical();
@@ -338,7 +338,7 @@ namespace TileAdventure
             }
         }
 
-        private void AutoColorSolvable()
+        private void FillTileAuto()
         {
             if (_currentLevelData == null || _currentLevelData.layoutConfigurations.Count == 0) return;
             if (_iconPaletteSO == null || _iconPaletteSO.IconList.Count == 0) return;
@@ -351,7 +351,7 @@ namespace TileAdventure
                 return;
             }
 
-            Undo.RecordObject(_currentLevelData, "Auto Color");
+            Undo.RecordObject(_currentLevelData, "Fill Tile Auto");
 
             Dictionary<Vector3Int, int> tileIndexMap = new Dictionary<Vector3Int, int>();
             for (int i = 0; i < tiles.Count; i++)
