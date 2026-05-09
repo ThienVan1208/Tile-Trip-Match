@@ -1,3 +1,9 @@
+NOTE: 
+- Unity Editor version: 6000.3.71f.
+- Game flow in editor: Bootstrap Scene -> Loading Scene -> Home Scene -> GameplayScene.
+
+
+
 ## 1. System Architecture
 I use the MVP pattern combined with Event-Driven Architecture (ScriptableObject-based)  .
 
